@@ -3,338 +3,237 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TinyBestie Maker — Bikin Figurin dari Fotomu</title>
+<title>TinyBestie Maker — Panel CS</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧸</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --cream:#FAF1E6; --cream2:#F4E6D8; --rose:#C56B7A; --rose-d:#A8505F;
-    --ink:#4A3B3F; --soft:#8a777c; --card:#fffdfb; --line:#ecd9cf;
-  }
+  :root{--cream:#FAF1E6;--cream2:#F4E6D8;--rose:#C56B7A;--rose-d:#A8505F;--ink:#4A3B3F;--soft:#8a777c;--card:#fffdfb;--line:#ecd9cf}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{
-    font-family:'Quicksand',sans-serif; color:var(--ink);
-    background:linear-gradient(170deg,#fff6ee 0%,var(--cream) 60%,var(--cream2) 100%);
-    min-height:100dvh; padding:16px 16px 40px; -webkit-font-smoothing:antialiased;
-  }
+  body{font-family:'Quicksand',sans-serif;color:var(--ink);background:linear-gradient(170deg,#fff6ee 0%,var(--cream) 60%,var(--cream2) 100%);min-height:100dvh;padding:16px 16px 40px;-webkit-font-smoothing:antialiased}
   .wrap{max-width:480px;margin:0 auto}
   header{text-align:center;margin:4px 0 14px}
-  .logo{font-family:'Fredoka';font-weight:700;font-size:28px;color:var(--rose);letter-spacing:-.5px}
+  .logo{font-family:'Fredoka';font-weight:700;font-size:27px;color:var(--rose);letter-spacing:-.5px}
   .logo span{color:var(--ink)}
-  .tag{font-size:14px;color:var(--soft);margin-top:2px;font-weight:600}
-  .privacy{font-size:11.5px;color:var(--soft);text-align:center;margin:7px auto 0;max-width:330px;line-height:1.5}
+  .tag{font-size:13.5px;color:var(--soft);margin-top:2px;font-weight:600}
+  .privacy{font-size:11px;color:var(--soft);text-align:center;margin:6px auto 0;max-width:330px;line-height:1.5}
   .privacy b{color:var(--rose-d)}
 
-  /* session bar */
-  .sbar{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:9px 10px;display:flex;gap:8px;align-items:center;margin-bottom:6px}
-  .sbar input{flex:1;min-width:0;border:none;background:transparent;font-family:'Quicksand';font-weight:600;font-size:14px;color:var(--ink);outline:none}
-  .sbar input::placeholder{color:#c3b1b1;font-weight:500}
-  .sb-btn{flex:none;border:none;background:var(--cream2);color:var(--rose-d);font-family:'Fredoka';font-weight:600;font-size:12.5px;border-radius:10px;padding:7px 10px;cursor:pointer;transition:.15s;white-space:nowrap}
-  .sb-btn:hover{background:#ecd9cf}
-  .sb-btn.hist{position:relative}
-  .badge{background:var(--rose);color:#fff;border-radius:9px;font-size:10.5px;padding:1px 5px;margin-left:3px;font-weight:700}
+  .intake{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:13px;margin-bottom:16px}
+  .lbl{font-family:'Fredoka';font-weight:600;font-size:13px;color:var(--ink);margin:2px 0 7px;display:flex;align-items:center;gap:7px}
+  .nstep{background:var(--rose);color:#fff;width:19px;height:19px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;flex:none}
+  .oname{width:100%;border:1.5px solid var(--line);border-radius:11px;padding:10px 11px;font-family:'Quicksand';font-weight:600;font-size:14px;color:var(--ink);outline:none}
+  .oname:focus{border-color:var(--rose)}
+  .oname::placeholder{color:#c3b1b1;font-weight:500}
 
-  .step{margin-top:18px}
-  .step-h{font-family:'Fredoka';font-weight:600;font-size:16px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
-  .num{background:var(--rose);color:#fff;width:23px;height:23px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;flex:none}
-
-  .styles{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
-  .style-card{background:var(--card);border:2.5px solid var(--line);border-radius:16px;padding:8px 8px 10px;cursor:pointer;transition:.18s;text-align:center;position:relative}
+  .styles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:4px}
+  .style-card{background:#fff;border:2.5px solid var(--line);border-radius:13px;padding:6px 6px 8px;cursor:pointer;transition:.16s;text-align:center;position:relative}
   .style-card:hover{border-color:#e0b9ad}
-  .style-card.sel{border-color:var(--rose);box-shadow:0 8px 22px -10px rgba(197,107,122,.55)}
-  .style-card.sel::after{content:'✓';position:absolute;top:6px;right:6px;background:var(--rose);color:#fff;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700}
-  .style-card img{width:100%;aspect-ratio:1;object-fit:contain;background:#fff;border-radius:11px}
-  .style-card .nm{font-family:'Fredoka';font-weight:600;margin-top:7px;font-size:14px}
-  .style-card .ds{font-size:11px;color:var(--soft);margin-top:1px;line-height:1.3}
+  .style-card.sel{border-color:var(--rose);box-shadow:0 6px 16px -8px rgba(197,107,122,.5)}
+  .style-card.sel::after{content:'✓';position:absolute;top:5px;right:5px;background:var(--rose);color:#fff;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700}
+  .style-card img{width:100%;aspect-ratio:1;object-fit:contain;background:#fff;border-radius:9px}
+  .style-card .nm{font-family:'Fredoka';font-weight:600;margin-top:5px;font-size:12.5px}
+  .style-card .ds{font-size:10px;color:var(--soft);line-height:1.25}
 
-  .drop{display:block;background:var(--card);border:2.5px dashed var(--line);border-radius:18px;padding:26px 16px;text-align:center;cursor:pointer;transition:.18s}
+  .drop{display:block;background:#fff;border:2.5px dashed var(--line);border-radius:14px;padding:16px;text-align:center;cursor:pointer;transition:.16s;margin-top:4px}
   .drop:hover{border-color:#e0b9ad;background:#fffaf5}
-  .drop.has{border-style:solid;border-color:var(--rose);padding:12px}
-  .drop .ico{font-size:34px}
-  .drop .t1{font-family:'Fredoka';font-weight:600;margin-top:6px}
-  .drop .t2{font-size:12px;color:var(--soft);margin-top:3px}
-  .drop img{max-height:200px;max-width:100%;border-radius:12px}
-  .tips{font-size:12px;color:var(--soft);margin-top:9px;line-height:1.55;padding-left:2px}
+  .drop.has{border-style:solid;border-color:var(--rose);padding:8px}
+  .drop .ico{font-size:26px}
+  .drop .t1{font-family:'Fredoka';font-weight:600;font-size:13.5px;margin-top:3px}
+  .drop .t2{font-size:11px;color:var(--soft);margin-top:2px}
+  .drop img{max-height:140px;max-width:100%;border-radius:9px}
+  .tips{font-size:11px;color:var(--soft);margin-top:7px;line-height:1.5}
   .tips b{color:var(--rose-d)}
 
-  .go{width:100%;margin-top:22px;border:none;border-radius:16px;padding:16px;font-family:'Fredoka';font-weight:600;font-size:17.5px;color:#fff;background:var(--rose);cursor:pointer;transition:.18s;box-shadow:0 10px 24px -10px rgba(197,107,122,.7)}
+  .go{width:100%;margin-top:13px;border:none;border-radius:13px;padding:14px;font-family:'Fredoka';font-weight:600;font-size:16px;color:#fff;background:var(--rose);cursor:pointer;transition:.16s;box-shadow:0 8px 20px -10px rgba(197,107,122,.7)}
   .go:disabled{background:#dcc8c5;box-shadow:none;cursor:not-allowed}
   .go:not(:disabled):active{transform:translateY(1px)}
+  .gohint{font-size:11px;color:var(--soft);text-align:center;margin-top:8px;line-height:1.45}
 
-  .load{display:none;text-align:center;padding:30px 10px}
-  .load.on{display:block}
-  .spin{width:64px;height:64px;margin:0 auto 16px;border-radius:50%;border:6px solid var(--cream2);border-top-color:var(--rose);animation:s 1s linear infinite}
+  .jobs-h{display:flex;justify-content:space-between;align-items:center;margin:2px 3px 10px}
+  .jobs-h b{font-family:'Fredoka';font-size:15px}
+  .jobs-h .clr{border:none;background:transparent;color:var(--soft);font-size:12px;cursor:pointer;font-weight:600}
+  .jempty{text-align:center;color:var(--soft);font-size:13px;padding:24px 10px;line-height:1.6}
+
+  .job{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:11px;margin-bottom:11px}
+  .job-top{display:flex;gap:9px;align-items:center}
+  .job-in{width:42px;height:42px;border-radius:9px;object-fit:cover;background:#fff;border:1px solid var(--line);flex:none}
+  .job-info{flex:1;min-width:0}
+  .job-name{font-family:'Fredoka';font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .job-sub{font-size:11px;color:var(--soft);margin-top:1px}
+  .job-x{border:none;background:var(--cream2);width:25px;height:25px;border-radius:50%;cursor:pointer;color:var(--soft);flex:none;font-size:13px}
+  .st{font-size:11px;font-weight:700;padding:2px 8px;border-radius:8px;display:inline-flex;align-items:center;gap:5px}
+  .st.queued{background:#efe7e0;color:#9b8478}
+  .st.running{background:#fff3e2;color:#c8782b}
+  .st.done{background:#e7f6ec;color:#2e8b57}
+  .st.error{background:#fdeaea;color:#c0392b}
+  .mini{width:11px;height:11px;border-radius:50%;border:2px solid #f0d6b8;border-top-color:#c8782b;animation:s .9s linear infinite;display:inline-block}
   @keyframes s{to{transform:rotate(360deg)}}
-  .lmsg{font-family:'Fredoka';font-weight:500;font-size:16px}
-  .ltime{font-size:12.5px;color:var(--soft);margin-top:6px}
-  .lhint{font-size:12px;color:var(--soft);margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 12px;display:inline-block}
-
-  .res{display:none;text-align:center;margin-top:8px}
-  .res.on{display:block}
-  .res .rname{font-family:'Fredoka';font-weight:600;font-size:14px;color:var(--rose-d);margin-bottom:8px}
-  .res .resimg{width:100%;max-width:330px;border-radius:18px;background:#fff;border:1px solid var(--line);box-shadow:0 14px 30px -16px rgba(74,59,63,.4)}
-  .res h3{font-family:'Fredoka';font-weight:600;font-size:18px;margin:12px 0 3px}
-  .res p{font-size:12.5px;color:var(--soft);margin-bottom:14px}
-  .btnrow{display:flex;flex-direction:column;gap:9px}
-  .btn{border:none;border-radius:14px;padding:13px;font-family:'Fredoka';font-weight:600;font-size:15px;cursor:pointer;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px}
-  .btn-wa{background:#25D366;color:#fff}
-  .btn-dl{background:#fff;color:var(--rose-d);border:2px solid var(--rose)}
-  .btn-rev{background:var(--cream2);color:var(--rose-d)}
-  .btn-again{background:transparent;color:var(--soft);font-size:13.5px;padding:8px}
-
-  /* revise box */
-  .revbox{display:none;margin-top:12px;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:12px;text-align:left}
-  .revbox.on{display:block}
-  .revbox label{font-family:'Fredoka';font-weight:600;font-size:13.5px;display:block;margin-bottom:7px}
-  .revbox textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:9px;font-family:'Quicksand';font-weight:500;font-size:13.5px;resize:vertical;min-height:54px;outline:none;color:var(--ink)}
-  .revbox textarea:focus{border-color:var(--rose)}
-  .revbox .rv-row{display:flex;gap:8px;margin-top:8px}
-  .revbox .rv-go{flex:1;border:none;background:var(--rose);color:#fff;font-family:'Fredoka';font-weight:600;font-size:14px;border-radius:11px;padding:11px;cursor:pointer}
-  .revbox .rv-x{border:none;background:transparent;color:var(--soft);font-size:13px;padding:0 10px;cursor:pointer}
-  .rv-hint{font-size:11px;color:var(--soft);margin-top:6px}
-
-  .err{display:none;background:#fff0f0;border:1.5px solid #f3c4c4;color:#b14b4b;border-radius:14px;padding:14px;font-size:14px;text-align:center;margin-top:16px;font-weight:600}
-  .err.on{display:block}
-  .ft{text-align:center;font-size:11.5px;color:var(--soft);margin-top:28px}
-
-  /* history overlay */
-  .hov{position:fixed;inset:0;background:rgba(74,59,63,.45);z-index:50;display:none;padding:18px}
-  .hov.on{display:flex}
-  .hpanel{background:var(--cream);max-width:520px;width:100%;margin:auto;border-radius:20px;max-height:86dvh;display:flex;flex-direction:column;box-shadow:0 20px 50px -20px rgba(0,0,0,.4)}
-  .hhead{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line)}
-  .hhead b{font-family:'Fredoka';font-size:16px}
-  .hclose{border:none;background:var(--cream2);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:15px;color:var(--ink)}
-  .hbody{overflow-y:auto;padding:14px 16px}
-  .hgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:11px}
-  .hcard{background:var(--card);border:1.5px solid var(--line);border-radius:13px;overflow:hidden;cursor:pointer;transition:.15s;position:relative}
-  .hcard:hover{border-color:var(--rose);box-shadow:0 8px 18px -10px rgba(197,107,122,.5)}
-  .hcard img{width:100%;aspect-ratio:1;object-fit:contain;background:#fff;display:block}
-  .hcard .hc-b{padding:7px 8px 9px}
-  .hcard .hc-n{font-family:'Fredoka';font-weight:600;font-size:12.5px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .hcard .hc-m{font-size:10.5px;color:var(--soft);margin-top:1px}
-  .hcard .hc-x{position:absolute;top:5px;right:5px;background:rgba(255,255,255,.92);border:none;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:12px;color:#b14b4b;line-height:1}
-  .hempty{text-align:center;color:var(--soft);font-size:13.5px;padding:30px 10px}
+  .job-out{display:block;width:100%;max-width:230px;margin:10px auto 0;border-radius:12px;background:#fff;border:1px solid var(--line)}
+  .jacts{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:10px}
+  .jbtn{border:none;border-radius:10px;padding:8px 11px;font-family:'Fredoka';font-weight:600;font-size:12.5px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px}
+  .jbtn.dl{background:#fff;color:var(--rose-d);border:1.5px solid var(--rose)}
+  .jbtn.wa{background:#25D366;color:#fff}
+  .jbtn.rev{background:var(--cream2);color:var(--rose-d)}
+  .jbtn.retry{background:var(--cream2);color:var(--rose-d)}
+  .jerr{font-size:12.5px;color:#c0392b;text-align:center;margin-top:8px}
+  .jrev{display:none;margin-top:9px;gap:7px}
+  .jrev.on{display:flex}
+  .jrev input{flex:1;min-width:0;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;font-family:'Quicksand';font-weight:500;font-size:13px;outline:none}
+  .jrev input:focus{border-color:var(--rose)}
+  .jrev button{border:none;background:var(--rose);color:#fff;border-radius:10px;padding:0 13px;font-family:'Fredoka';font-weight:600;font-size:13px;cursor:pointer}
+  .ft{text-align:center;font-size:11px;color:var(--soft);margin-top:26px}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <div class="logo">tiny<span>bestie</span> maker</div>
-    <div class="tag">Upload fotomu → lihat jadi figurin 🧸</div>
-    <div class="privacy">Gratis &amp; gampang. <b>Fotomu ga disimpan</b> di server — langsung kehapus setelah jadi.</div>
+    <div class="tag">Panel CS — bikin &amp; kelola figurin 🧸</div>
+    <div class="privacy">Bisa proses <b>banyak order sekaligus</b> (paralel). Foto ga disimpan di server.</div>
   </header>
 
-  <div class="sbar">
-    <input id="oname" type="text" placeholder="Nama order / customer (opsional)" maxlength="50">
-    <button class="sb-btn" id="bNew">+ Baru</button>
-    <button class="sb-btn hist" id="bHist">🕘 Riwayat<span class="badge" id="hcount">0</span></button>
+  <div class="intake">
+    <div class="lbl"><span class="nstep">1</span> Nama order / customer</div>
+    <input class="oname" id="oname" type="text" placeholder="cth: Bu Sari — couple wisuda" maxlength="60">
+
+    <div class="lbl" style="margin-top:13px"><span class="nstep">2</span> Style</div>
+    <div class="styles" id="styles">
+      <div class="style-card" data-style="chibi"><img src="ex_chibi.png" alt="Chibi"><div class="nm">Chibi</div><div class="ds">Gede &amp; gemes</div></div>
+      <div class="style-card" data-style="funko"><img src="ex_funko.png" alt="Funko"><div class="nm">Funko Pop</div><div class="ds">Ikonik</div></div>
+      <div class="style-card" data-style="realmini"><img src="ex_realmini.png" alt="Realistic"><div class="nm">Realistic</div><div class="ds">Paling mirip</div></div>
+    </div>
+
+    <div class="lbl" style="margin-top:13px"><span class="nstep">3</span> Foto</div>
+    <label class="drop" id="drop">
+      <input type="file" id="file" accept="image/*" hidden>
+      <div id="dropEmpty"><div class="ico">📸</div><div class="t1">Ketuk buat pilih foto</div><div class="t2">Sendiri / berdua / keluarga · jelas &amp; terang</div></div>
+      <div id="dropPrev" style="display:none"></div>
+    </label>
+
+    <button class="go" id="go" disabled>✨ Generate figurin</button>
+    <div class="gohint">Habis klik, langsung bisa tambah order lain — diproses <b>paralel</b> (3 sekaligus).</div>
   </div>
 
-  <main id="form">
-    <div class="step">
-      <div class="step-h"><span class="num">1</span> Pilih style figurin</div>
-      <div class="styles" id="styles">
-        <div class="style-card" data-style="chibi">
-          <img src="ex_chibi.png" alt="Chibi">
-          <div class="nm">Chibi</div>
-          <div class="ds">Gede &amp; gemes</div>
-        </div>
-        <div class="style-card" data-style="funko">
-          <img src="ex_funko.png" alt="Funko Pop">
-          <div class="nm">Funko Pop</div>
-          <div class="ds">Mainan ikonik</div>
-        </div>
-        <div class="style-card" data-style="realmini">
-          <img src="ex_realmini.png" alt="Realistic Mini">
-          <div class="nm">Realistic Mini</div>
-          <div class="ds">Paling mirip</div>
-        </div>
-      </div>
-    </div>
+  <div class="jobs-h"><b>🗂️ Order</b><button class="clr" id="clrDone" style="display:none">Bersihkan yg selesai</button></div>
+  <div id="jobs"></div>
+  <div class="jempty" id="jempty">Belum ada order.<br>Isi form di atas terus klik Generate 👆</div>
 
-    <div class="step">
-      <div class="step-h"><span class="num">2</span> Upload fotomu</div>
-      <label class="drop" id="drop">
-        <input type="file" id="file" accept="image/*" hidden>
-        <div id="dropEmpty">
-          <div class="ico">📸</div>
-          <div class="t1">Ketuk buat pilih foto</div>
-          <div class="t2">Boleh sendiri, berdua, atau keluarga</div>
-        </div>
-        <div id="dropPrev" style="display:none"></div>
-      </label>
-      <div class="tips">✨ Biar hasilnya mirip: foto <b>jelas, terang, wajah keliatan jelas</b> &amp; ngadep depan. Hindari foto blur / gelap / nyamping.</div>
-    </div>
-
-    <button class="go" id="go" disabled>Bikin Figurin-ku ✨</button>
-  </main>
-
-  <div class="load" id="load">
-    <div class="spin"></div>
-    <div class="lmsg" id="lmsg">Lagi nyiapin tanah liat digital…</div>
-    <div class="ltime" id="ltime">0 detik</div>
-    <div class="lhint">⏳ Bikin figurin makan ~2-3 menit. Jangan tutup halaman ya!</div>
-  </div>
-
-  <div class="res" id="res">
-    <div class="rname" id="rname"></div>
-    <img class="resimg" id="resimg" alt="Hasil figurin">
-    <h3>Tadaa! Ini figurinnya 🎉</h3>
-    <p>Suka? Download dulu, terus kirim ke CS buat pesan yang asli.</p>
-    <div class="btnrow">
-      <a class="btn btn-dl" id="dl" download="figurin-tinybestie.png">⬇️ Download Gambar</a>
-      <a class="btn btn-wa" id="wa" target="_blank" rel="noopener">💬 Pesan ke CS (WhatsApp)</a>
-      <button class="btn btn-rev" id="bRev">✏️ Revisi figurin ini</button>
-      <button class="btn btn-again" id="again">↺ Sesi baru</button>
-    </div>
-    <div class="revbox" id="revbox">
-      <label>Mau diubah apa?</label>
-      <textarea id="revtext" placeholder="cth: ganti baju jadi merah · rambut lebih panjang · tambah kacamata · senyum lebih lebar"></textarea>
-      <div class="rv-row">
-        <button class="rv-go" id="revGo">✨ Generate revisi</button>
-        <button class="rv-x" id="revX">batal</button>
-      </div>
-      <div class="rv-hint">Revisi pakai hasil yang lagi tampil sekarang. Makan ~2-3 menit lagi.</div>
-    </div>
-  </div>
-
-  <div class="err" id="err"></div>
   <div class="ft">© tinybestie — figurin chibi handmade dari fotomu</div>
-</div>
-
-<!-- history overlay -->
-<div class="hov" id="hov">
-  <div class="hpanel">
-    <div class="hhead"><b>🕘 Riwayat figurin</b><button class="hclose" id="hClose">✕</button></div>
-    <div class="hbody"><div class="hgrid" id="hgrid"></div><div class="hempty" id="hempty" style="display:none">Belum ada figurin tersimpan.<br>Bikin satu dulu yuk!</div></div>
-  </div>
 </div>
 
 <script src="config.js"></script>
 <script>
-const API = (window.MAKER_API || '').replace(/\/$/,'');
-const WA_NUMBER = (window.MAKER_WA || "62XXXXXXXXXX");
-const $ = s => document.querySelector(s);
-const STYLE_LABEL = {chibi:'Chibi', funko:'Funko Pop', realmini:'Realistic Mini'};
-let style=null, photo=null, currentResult=null, poll=null, timer=null;
+const API=(window.MAKER_API||'').replace(/\/$/,'');
+const WA=(window.MAKER_WA||"62XXXXXXXXXX");
+const $=s=>document.querySelector(s);
+const LBL={chibi:'Chibi',funko:'Funko Pop',realmini:'Realistic Mini'};
+let selStyle=null, selPhoto=null, jobs=[], ticker=null;
 
-/* ---------- IndexedDB (riwayat, muat banyak gambar) ---------- */
-function idb(){return new Promise((res,rej)=>{const r=indexedDB.open('tinybestie_maker',1);r.onupgradeneeded=()=>{r.result.createObjectStore('history',{keyPath:'id'});};r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});}
-async function saveItem(it){const db=await idb();return new Promise((res,rej)=>{const tx=db.transaction('history','readwrite');tx.objectStore('history').put(it);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);});}
-async function allItems(){const db=await idb();return new Promise((res,rej)=>{const rq=db.transaction('history','readonly').objectStore('history').getAll();rq.onsuccess=()=>res(rq.result||[]);rq.onerror=()=>rej(rq.error);});}
-async function delItem(id){const db=await idb();return new Promise((res)=>{const tx=db.transaction('history','readwrite');tx.objectStore('history').delete(id);tx.oncomplete=()=>res();});}
-async function refreshCount(){try{const n=(await allItems()).length;$('#hcount').textContent=n;}catch(e){}}
+/* ---- IndexedDB ---- */
+function idb(){return new Promise((res,rej)=>{const r=indexedDB.open('tinybestie_maker',1);r.onupgradeneeded=()=>r.result.createObjectStore('history',{keyPath:'id'});r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});}
+async function dbPut(it){const db=await idb();return new Promise((res,rej)=>{const tx=db.transaction('history','readwrite');tx.objectStore('history').put(it);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);});}
+async function dbAll(){const db=await idb();return new Promise((res,rej)=>{const rq=db.transaction('history','readonly').objectStore('history').getAll();rq.onsuccess=()=>res(rq.result||[]);rq.onerror=()=>rej(rq.error);});}
+async function dbDel(id){const db=await idb();return new Promise((res)=>{const tx=db.transaction('history','readwrite');tx.objectStore('history').delete(id);tx.oncomplete=()=>res();});}
 
-/* ---------- helpers ---------- */
-function orderName(){return ($('#oname').value||'').trim() || 'Tanpa nama';}
-function mkItem(image, st, name){return {id:Date.now()+'-'+Math.random().toString(36).slice(2,7), t:Date.now(), name, style:st, image, time:new Date().toLocaleString('id-ID',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})};}
-function show(view){['form','load','res'].forEach(v=>$('#'+v).classList.toggle('on', v===view));$('#form').style.display = view==='form'?'block':'none';$('#err').classList.remove('on');}
+/* ---- intake ---- */
+$('#styles').addEventListener('click',e=>{const c=e.target.closest('.style-card');if(!c)return;document.querySelectorAll('.style-card').forEach(x=>x.classList.remove('sel'));c.classList.add('sel');selStyle=c.dataset.style;sync();});
+$('#file').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{selPhoto=r.result;$('#dropEmpty').style.display='none';const p=$('#dropPrev');p.style.display='block';p.innerHTML='<img src="'+selPhoto+'">';$('#drop').classList.add('has');sync();};r.readAsDataURL(f);});
+function sync(){$('#go').disabled=!(selStyle&&selPhoto);}
+function nowStr(){return new Date().toLocaleString('id-ID',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});}
+function newId(){return Date.now()+'-'+Math.random().toString(36).slice(2,7);}
 
-/* ---------- pick style + upload ---------- */
-$('#styles').addEventListener('click', e=>{const c=e.target.closest('.style-card');if(!c)return;document.querySelectorAll('.style-card').forEach(x=>x.classList.remove('sel'));c.classList.add('sel');style=c.dataset.style;sync();});
-$('#file').addEventListener('change', e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{photo=r.result;$('#dropEmpty').style.display='none';const p=$('#dropPrev');p.style.display='block';p.innerHTML='<img src="'+photo+'">';$('#drop').classList.add('has');sync();};r.readAsDataURL(f);});
-function sync(){$('#go').disabled = !(style && photo);}
-
-/* ---------- loading ui ---------- */
-const MSGS=["Lagi nyiapin tanah liat digital…","Lagi pelajarin wajahmu…","Lagi bentuk kepala & badan…","Lagi ngecat figurinmu…","Dikit lagi jadi, sabar ya bestie 🧸"];
-function startLoad(first){show('load');let sec=0,mi=0;$('#lmsg').textContent=first||MSGS[0];$('#ltime').textContent='0 detik';clearInterval(timer);timer=setInterval(()=>{sec++;$('#ltime').textContent=sec+' detik';if(sec%24===0){mi=(mi+1)%MSGS.length;$('#lmsg').textContent=MSGS[mi];}},1000);}
-function stopAll(){clearInterval(timer);clearInterval(poll);}
-
-/* ---------- job runner ---------- */
-async function runJob(payload){
-  const r=await fetch(API+'/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-  const d=await r.json();
-  if(!r.ok||!d.jobId) throw new Error(d.error||'Gagal mulai. Coba lagi ya.');
-  return await new Promise((resolve,reject)=>{
-    poll=setInterval(async()=>{
-      try{const s=await fetch(API+'/status/'+d.jobId);const j=await s.json();
-        if(j.status==='queued'&&j.position>1)$('#lmsg').textContent='Lagi antri (posisi '+j.position+')…';
-        if(j.status==='done'){clearInterval(poll);resolve(j.image);}
-        else if(j.status==='error'||j.status==='notfound'){clearInterval(poll);reject(new Error(j.error||'Gagal generate. Coba lagi ya.'));}
-      }catch(e){/* keep polling */}
-    },3000);
-  });
-}
-
-/* ---------- generate ---------- */
-$('#go').addEventListener('click', start);
-async function start(){
-  if(!API){return fail('Backend belum diset (config.js).');}
-  startLoad();
-  try{
-    const img=await runJob({photo, style});
-    const item=mkItem(img, style, orderName());
-    await saveItem(item); currentResult=item; await refreshCount();
-    showResult(item);
-  }catch(e){fail(e.message);}
-}
-
-/* ---------- result view ---------- */
-function showResult(item){
-  stopAll(); currentResult=item; show('res');
-  $('#rname').textContent = item.name + ' · ' + (STYLE_LABEL[item.style]||'') + ' · ' + (item.time||'');
-  $('#resimg').src=item.image; $('#dl').href=item.image;
-  $('#dl').download='figurin-'+(item.name||'tinybestie').replace(/[^a-z0-9]+/gi,'-').toLowerCase()+'.png';
-  const txt=encodeURIComponent("Halo CS tinybestie 👋 Aku mau pesan figurin "+(STYLE_LABEL[item.style]||'')+" ("+item.name+"). Ini hasil preview-ku (aku lampirin gambarnya ya):");
-  $('#wa').href="https://wa.me/"+WA_NUMBER+"?text="+txt;
-  $('#revbox').classList.remove('on');
-}
-
-/* ---------- revise ---------- */
-$('#bRev').addEventListener('click', ()=>{$('#revbox').classList.toggle('on'); if($('#revbox').classList.contains('on'))$('#revtext').focus();});
-$('#revX').addEventListener('click', ()=>$('#revbox').classList.remove('on'));
-$('#revGo').addEventListener('click', async()=>{
-  const ins=($('#revtext').value||'').trim();
-  if(!ins){$('#revtext').focus();return;}
-  if(!currentResult)return;
-  const baseName=currentResult.name||'Order'; const st=currentResult.style; const baseImg=currentResult.image;
-  $('#revtext').value='';
-  startLoad('Lagi revisi figurinmu…');
-  try{
-    const img=await runJob({photo:baseImg, instruction:ins});
-    const item=mkItem(img, st, baseName+' • revisi');
-    await saveItem(item); await refreshCount();
-    showResult(item);
-  }catch(e){fail(e.message);}
+/* ---- add order ---- */
+$('#go').addEventListener('click',()=>{
+  if(!API){alert('Backend belum diset (config.js).');return;}
+  if(!(selStyle&&selPhoto))return;
+  const job={id:newId(),t:Date.now(),name:($('#oname').value||'').trim()||'Tanpa nama',style:selStyle,src:selPhoto,status:'queued',startT:Date.now()};
+  jobs.unshift(job);
+  submit(job);
+  // reset foto + nama, style dibiarin (sering sama)
+  selPhoto=null;$('#dropEmpty').style.display='block';$('#dropPrev').style.display='none';$('#drop').classList.remove('has');$('#file').value='';$('#oname').value='';sync();
+  render();startTicker();$('#oname').focus();
 });
 
-/* ---------- new session ---------- */
-$('#bNew').addEventListener('click', newSession);
-$('#again').addEventListener('click', newSession);
-function newSession(){
-  stopAll(); style=null; photo=null; currentResult=null;
-  document.querySelectorAll('.style-card').forEach(x=>x.classList.remove('sel'));
-  $('#dropEmpty').style.display='block'; $('#dropPrev').style.display='none'; $('#drop').classList.remove('has'); $('#file').value='';
-  $('#oname').value=''; $('#revbox').classList.remove('on');
-  show('form'); sync(); $('#oname').focus();
+async function submit(job){
+  try{
+    const body=job.instruction?{photo:job.src,instruction:job.instruction}:{photo:job.src,style:job.style};
+    const r=await fetch(API+'/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    const d=await r.json();
+    if(!r.ok||!d.jobId)throw new Error(d.error||'Gagal mulai');
+    job.jobId=d.jobId;job.status='running';
+  }catch(e){job.status='error';job.error=e.message;}
+  render();
 }
 
-/* ---------- history overlay ---------- */
-$('#bHist').addEventListener('click', openHistory);
-$('#hClose').addEventListener('click', ()=>$('#hov').classList.remove('on'));
-$('#hov').addEventListener('click', e=>{if(e.target.id==='hov')$('#hov').classList.remove('on');});
-async function openHistory(){
-  const items=(await allItems()).sort((a,b)=>b.t-a.t);
-  const grid=$('#hgrid'); grid.innerHTML='';
-  $('#hempty').style.display = items.length?'none':'block';
-  items.forEach(it=>{
-    const d=document.createElement('div'); d.className='hcard';
-    d.innerHTML='<button class="hc-x" title="Hapus">✕</button><img src="'+it.image+'"><div class="hc-b"><div class="hc-n">'+escapeHtml(it.name)+'</div><div class="hc-m">'+(STYLE_LABEL[it.style]||'')+' · '+(it.time||'')+'</div></div>';
-    d.querySelector('img').addEventListener('click', ()=>{$('#hov').classList.remove('on'); showResult(it); $('#oname').value=it.name==='Tanpa nama'?'':it.name;});
-    d.querySelector('.hc-b').addEventListener('click', ()=>{$('#hov').classList.remove('on'); showResult(it); $('#oname').value=it.name==='Tanpa nama'?'':it.name;});
-    d.querySelector('.hc-x').addEventListener('click', async(ev)=>{ev.stopPropagation(); await delItem(it.id); await refreshCount(); openHistory();});
-    grid.appendChild(d);
-  });
-  $('#hov').classList.add('on');
+/* ---- poll all running ---- */
+function startTicker(){ if(ticker)return; let n=0; ticker=setInterval(()=>{ n++; updateTimers(); if(n%3===0)pollAll(); if(!jobs.some(j=>j.status==='running'||j.status==='queued')){clearInterval(ticker);ticker=null;} },1000); }
+async function pollAll(){
+  for(const job of jobs){
+    if((job.status!=='running'&&job.status!=='queued')||!job.jobId)continue;
+    try{const r=await fetch(API+'/status/'+job.jobId);const d=await r.json();
+      if(d.status==='queued'){job.status='queued';job.pos=d.position;}
+      else if(d.status==='running'){job.status='running';}
+      else if(d.status==='done'){job.status='done';job.image=d.image;job.src=null;job.time=nowStr();await dbPut({id:job.id,t:job.t,name:job.name,style:job.style,image:job.image,time:job.time});updateCard(job);continue;}
+      else if(d.status==='error'||d.status==='notfound'){job.status='error';job.error=d.error||'Gagal generate';}
+      updateCard(job);
+    }catch(e){}
+  }
 }
-function escapeHtml(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function updateTimers(){jobs.forEach(j=>{if(j.status==='running'){const el=document.querySelector('#card-'+CSS.escape(j.id)+' .st-time');if(el)el.textContent=Math.round((Date.now()-j.startT)/1000)+'s';}});}
 
-/* ---------- error ---------- */
-function fail(msg){stopAll(); show('form'); const e=$('#err'); e.textContent='😔 '+(msg||'Ada error. Coba lagi ya.'); e.classList.add('on');}
+/* ---- render ---- */
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function cardHTML(j){
+  let body='';
+  if(j.status==='queued')body='<div style="margin-top:9px"><span class="st queued">⏳ Antri'+(j.pos>1?' (#'+j.pos+')':'')+'</span></div>';
+  else if(j.status==='running')body='<div style="margin-top:9px"><span class="st running"><span class="mini"></span>Proses <span class="st-time">0s</span></span><div style="font-size:10.5px;color:var(--soft);margin-top:5px">~2-3 menit. Boleh tinggal — nanti balik lagi.</div></div>';
+  else if(j.status==='error')body='<div class="jerr">😔 '+esc(j.error||'Gagal')+'</div><div class="jacts"><button class="jbtn retry" data-act="retry">↻ Ulangi</button></div>';
+  else if(j.status==='done'){
+    const wahref='https://wa.me/'+WA+'?text='+encodeURIComponent('Halo CS tinybestie 👋 order '+j.name+' ('+(LBL[j.style]||'')+'). Ini preview-nya:');
+    body='<img class="job-out" src="'+j.image+'">'
+      +'<div class="jacts">'
+      +'<a class="jbtn dl" download="figurin-'+esc((j.name||'tb').replace(/[^a-z0-9]+/gi,'-').toLowerCase())+'.png" href="'+j.image+'">⬇️ Download</a>'
+      +'<a class="jbtn wa" target="_blank" rel="noopener" href="'+wahref+'">💬 WA</a>'
+      +'<button class="jbtn rev" data-act="revtoggle">✏️ Revisi</button>'
+      +'</div>'
+      +'<div class="jrev"><input type="text" placeholder="mau diubah apa? cth: baju merah" maxlength="200"><button data-act="revgo">✨</button></div>';
+  }
+  const sub=(LBL[j.style]||'')+(j.time?' · '+j.time:'');
+  return '<div class="job-top">'
+    +(j.src?'<img class="job-in" src="'+j.src+'">':'<div class="job-in" style="display:grid;place-items:center;font-size:18px">🧸</div>')
+    +'<div class="job-info"><div class="job-name">'+esc(j.name)+'</div><div class="job-sub">'+sub+'</div></div>'
+    +'<button class="job-x" data-act="del" title="Hapus">✕</button></div>'+body;
+}
+function render(){
+  const wrap=$('#jobs');wrap.innerHTML='';
+  jobs.sort((a,b)=>b.t-a.t).forEach(j=>{const d=document.createElement('div');d.className='job';d.id='card-'+j.id;d.dataset.id=j.id;d.innerHTML=cardHTML(j);wrap.appendChild(d);});
+  $('#jempty').style.display=jobs.length?'none':'block';
+  $('#clrDone').style.display=jobs.some(j=>j.status==='done'||j.status==='error')?'block':'none';
+}
+function updateCard(j){const el=document.getElementById('card-'+j.id);if(el)el.innerHTML=cardHTML(j);else render();$('#clrDone').style.display=jobs.some(x=>x.status==='done'||x.status==='error')?'block':'none';}
 
-refreshCount();
+/* ---- card actions ---- */
+$('#jobs').addEventListener('click',async e=>{
+  const b=e.target.closest('[data-act]');if(!b)return;
+  const card=e.target.closest('.job');const id=card&&card.dataset.id;const job=jobs.find(j=>j.id===id);if(!job)return;
+  const act=b.dataset.act;
+  if(act==='del'){await dbDel(job.id);jobs=jobs.filter(j=>j.id!==job.id);render();}
+  else if(act==='retry'){job.status='queued';job.error=null;job.startT=Date.now();updateCard(job);submit(job);startTicker();}
+  else if(act==='revtoggle'){const r=card.querySelector('.jrev');r.classList.toggle('on');if(r.classList.contains('on'))r.querySelector('input').focus();}
+  else if(act==='revgo'){const inp=card.querySelector('.jrev input');const v=(inp.value||'').trim();if(!v){inp.focus();return;}revise(job,v);}
+});
+function revise(srcJob,ins){
+  const job={id:newId(),t:Date.now(),name:(srcJob.name||'Order')+' • revisi',style:srcJob.style,src:srcJob.image,instruction:ins,status:'queued',startT:Date.now()};
+  jobs.unshift(job);submit(job);render();startTicker();
+}
+
+/* ---- clear done ---- */
+$('#clrDone').addEventListener('click',async()=>{ if(!confirm('Hapus semua order yang udah selesai/gagal dari daftar?'))return; for(const j of jobs.filter(x=>x.status==='done'||x.status==='error'))await dbDel(j.id); jobs=jobs.filter(j=>j.status==='running'||j.status==='queued'); render(); });
+
+/* ---- load history on start ---- */
+(async()=>{try{const items=await dbAll();items.forEach(it=>jobs.push({...it,status:'done'}));render();}catch(e){render();}})();
 </script>
 </body>
 </html>
