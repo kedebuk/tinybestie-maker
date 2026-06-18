@@ -132,8 +132,8 @@ async function submit(job,payload){
   catch(e){job.status='error';job.error=e.message;}
   render();
 }
-function reviseJob(okey,parentName,ins){const job={localId:newId(),startT:Date.now(),name:(parentName||'Order')+' • revisi',style:'',src:null,status:'queued',kind:'revisi'};live.unshift(job);submit(job,{reviseOf:okey,instruction:ins});render();startTicker();}
-function sheetJob(okey,parentName){const job={localId:newId(),startT:Date.now(),name:(parentName||'Order')+' • Sheet 3D',style:'',src:null,status:'queued',kind:'sheet'};live.unshift(job);submit(job,{sheetOf:okey});render();startTicker();}
+function reviseJob(okey,parentName,ins){const job={localId:newId(),startT:Date.now(),name:(parentName||'Order')+' • revisi',style:'',src:null,status:'queued',kind:'revisi',_parent:okey,_ins:ins};live.unshift(job);submit(job,{reviseOf:okey,instruction:ins});render();startTicker();}
+function sheetJob(okey,parentName){const job={localId:newId(),startT:Date.now(),name:(parentName||'Order')+' • Sheet 3D',style:'',src:null,status:'queued',kind:'sheet',_parent:okey};live.unshift(job);submit(job,{sheetOf:okey});render();startTicker();}
 
 /* poll */
 function startTicker(){if(ticker)return;let n=0;ticker=setInterval(()=>{n++;tick();if(n%3===0)pollAll();if(!live.some(j=>j.status==='running'||j.status==='queued')){clearInterval(ticker);ticker=null;}},1000);}
@@ -198,7 +198,7 @@ $('#jobs').addEventListener('click',async e=>{
   const card=e.target.closest('.job');const okey=card.dataset.okey,name=card.dataset.name,key=card.dataset.key;
   const act=b.dataset.act;
   if(act==='del'){if(okey){try{await fetch(API+'/order/'+encodeURIComponent(okey),{method:'DELETE'});}catch(e){}}live=live.filter(j=>j.localId!==key);central=central.filter(o=>o.id!==okey);render();}
-  else if(act==='retry'){const j=live.find(x=>x.localId===key);if(j){j.status='queued';j.error=null;j.startT=Date.now();updateCard(j);submit(j,j.kind==='revisi'?{reviseOf:j.okey,instruction:j._ins}:j.kind==='sheet'?{sheetOf:j.okey}:{photo:j.src,style:j.style,name:j.name});startTicker();}}
+  else if(act==='retry'){const j=live.find(x=>x.localId===key);if(j){j.status='queued';j.error=null;j.startT=Date.now();updateCard(j);submit(j,j.kind==='revisi'?{reviseOf:j._parent,instruction:j._ins}:j.kind==='sheet'?{sheetOf:j._parent}:{photo:j.src,style:j.style,name:j.name});startTicker();}}
   else if(act==='sheet'){if(okey)sheetJob(okey,name);}
   else if(act==='revtoggle'){const r=card.querySelector('.jrev');r.classList.toggle('on');if(r.classList.contains('on'))r.querySelector('input').focus();}
   else if(act==='revgo'){const inp=card.querySelector('.jrev input');const v=(inp.value||'').trim();if(!v)return inp.focus();if(okey)reviseJob(okey,name,v);}
