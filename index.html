@@ -17,17 +17,26 @@
   body{
     font-family:'Quicksand',sans-serif; color:var(--ink);
     background:linear-gradient(170deg,#fff6ee 0%,var(--cream) 60%,var(--cream2) 100%);
-    min-height:100dvh; padding:18px 16px 40px; -webkit-font-smoothing:antialiased;
+    min-height:100dvh; padding:16px 16px 40px; -webkit-font-smoothing:antialiased;
   }
   .wrap{max-width:480px;margin:0 auto}
-  header{text-align:center;margin:6px 0 18px}
-  .logo{font-family:'Fredoka';font-weight:700;font-size:30px;color:var(--rose);letter-spacing:-.5px}
+  header{text-align:center;margin:4px 0 14px}
+  .logo{font-family:'Fredoka';font-weight:700;font-size:28px;color:var(--rose);letter-spacing:-.5px}
   .logo span{color:var(--ink)}
-  .tag{font-size:14.5px;color:var(--soft);margin-top:3px;font-weight:600}
-  .privacy{font-size:12px;color:var(--soft);text-align:center;margin:8px auto 0;max-width:330px;line-height:1.5}
+  .tag{font-size:14px;color:var(--soft);margin-top:2px;font-weight:600}
+  .privacy{font-size:11.5px;color:var(--soft);text-align:center;margin:7px auto 0;max-width:330px;line-height:1.5}
   .privacy b{color:var(--rose-d)}
 
-  .step{margin-top:22px}
+  /* session bar */
+  .sbar{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:9px 10px;display:flex;gap:8px;align-items:center;margin-bottom:6px}
+  .sbar input{flex:1;min-width:0;border:none;background:transparent;font-family:'Quicksand';font-weight:600;font-size:14px;color:var(--ink);outline:none}
+  .sbar input::placeholder{color:#c3b1b1;font-weight:500}
+  .sb-btn{flex:none;border:none;background:var(--cream2);color:var(--rose-d);font-family:'Fredoka';font-weight:600;font-size:12.5px;border-radius:10px;padding:7px 10px;cursor:pointer;transition:.15s;white-space:nowrap}
+  .sb-btn:hover{background:#ecd9cf}
+  .sb-btn.hist{position:relative}
+  .badge{background:var(--rose);color:#fff;border-radius:9px;font-size:10.5px;padding:1px 5px;margin-left:3px;font-weight:700}
+
+  .step{margin-top:18px}
   .step-h{font-family:'Fredoka';font-weight:600;font-size:16px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
   .num{background:var(--rose);color:#fff;width:23px;height:23px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;flex:none}
 
@@ -40,7 +49,7 @@
   .style-card .nm{font-family:'Fredoka';font-weight:600;margin-top:7px;font-size:14px}
   .style-card .ds{font-size:11px;color:var(--soft);margin-top:1px;line-height:1.3}
 
-  .drop{background:var(--card);border:2.5px dashed var(--line);border-radius:18px;padding:26px 16px;text-align:center;cursor:pointer;transition:.18s}
+  .drop{display:block;background:var(--card);border:2.5px dashed var(--line);border-radius:18px;padding:26px 16px;text-align:center;cursor:pointer;transition:.18s}
   .drop:hover{border-color:#e0b9ad;background:#fffaf5}
   .drop.has{border-style:solid;border-color:var(--rose);padding:12px}
   .drop .ico{font-size:34px}
@@ -50,7 +59,7 @@
   .tips{font-size:12px;color:var(--soft);margin-top:9px;line-height:1.55;padding-left:2px}
   .tips b{color:var(--rose-d)}
 
-  .go{width:100%;margin-top:24px;border:none;border-radius:16px;padding:16px;font-family:'Fredoka';font-weight:600;font-size:17.5px;color:#fff;background:var(--rose);cursor:pointer;transition:.18s;box-shadow:0 10px 24px -10px rgba(197,107,122,.7)}
+  .go{width:100%;margin-top:22px;border:none;border-radius:16px;padding:16px;font-family:'Fredoka';font-weight:600;font-size:17.5px;color:#fff;background:var(--rose);cursor:pointer;transition:.18s;box-shadow:0 10px 24px -10px rgba(197,107,122,.7)}
   .go:disabled{background:#dcc8c5;box-shadow:none;cursor:not-allowed}
   .go:not(:disabled):active{transform:translateY(1px)}
 
@@ -62,19 +71,51 @@
   .ltime{font-size:12.5px;color:var(--soft);margin-top:6px}
   .lhint{font-size:12px;color:var(--soft);margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 12px;display:inline-block}
 
-  .res{display:none;text-align:center;margin-top:14px}
+  .res{display:none;text-align:center;margin-top:8px}
   .res.on{display:block}
-  .res .resimg{width:100%;max-width:340px;border-radius:18px;background:#fff;border:1px solid var(--line);box-shadow:0 14px 30px -16px rgba(74,59,63,.4)}
-  .res h3{font-family:'Fredoka';font-weight:600;font-size:19px;margin:14px 0 4px}
-  .res p{font-size:13px;color:var(--soft);margin-bottom:16px}
-  .btnrow{display:flex;flex-direction:column;gap:10px}
-  .btn{border:none;border-radius:14px;padding:14px;font-family:'Fredoka';font-weight:600;font-size:15.5px;cursor:pointer;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px}
+  .res .rname{font-family:'Fredoka';font-weight:600;font-size:14px;color:var(--rose-d);margin-bottom:8px}
+  .res .resimg{width:100%;max-width:330px;border-radius:18px;background:#fff;border:1px solid var(--line);box-shadow:0 14px 30px -16px rgba(74,59,63,.4)}
+  .res h3{font-family:'Fredoka';font-weight:600;font-size:18px;margin:12px 0 3px}
+  .res p{font-size:12.5px;color:var(--soft);margin-bottom:14px}
+  .btnrow{display:flex;flex-direction:column;gap:9px}
+  .btn{border:none;border-radius:14px;padding:13px;font-family:'Fredoka';font-weight:600;font-size:15px;cursor:pointer;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px}
   .btn-wa{background:#25D366;color:#fff}
   .btn-dl{background:#fff;color:var(--rose-d);border:2px solid var(--rose)}
+  .btn-rev{background:var(--cream2);color:var(--rose-d)}
   .btn-again{background:transparent;color:var(--soft);font-size:13.5px;padding:8px}
+
+  /* revise box */
+  .revbox{display:none;margin-top:12px;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:12px;text-align:left}
+  .revbox.on{display:block}
+  .revbox label{font-family:'Fredoka';font-weight:600;font-size:13.5px;display:block;margin-bottom:7px}
+  .revbox textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:9px;font-family:'Quicksand';font-weight:500;font-size:13.5px;resize:vertical;min-height:54px;outline:none;color:var(--ink)}
+  .revbox textarea:focus{border-color:var(--rose)}
+  .revbox .rv-row{display:flex;gap:8px;margin-top:8px}
+  .revbox .rv-go{flex:1;border:none;background:var(--rose);color:#fff;font-family:'Fredoka';font-weight:600;font-size:14px;border-radius:11px;padding:11px;cursor:pointer}
+  .revbox .rv-x{border:none;background:transparent;color:var(--soft);font-size:13px;padding:0 10px;cursor:pointer}
+  .rv-hint{font-size:11px;color:var(--soft);margin-top:6px}
+
   .err{display:none;background:#fff0f0;border:1.5px solid #f3c4c4;color:#b14b4b;border-radius:14px;padding:14px;font-size:14px;text-align:center;margin-top:16px;font-weight:600}
   .err.on{display:block}
-  .ft{text-align:center;font-size:11.5px;color:var(--soft);margin-top:30px}
+  .ft{text-align:center;font-size:11.5px;color:var(--soft);margin-top:28px}
+
+  /* history overlay */
+  .hov{position:fixed;inset:0;background:rgba(74,59,63,.45);z-index:50;display:none;padding:18px}
+  .hov.on{display:flex}
+  .hpanel{background:var(--cream);max-width:520px;width:100%;margin:auto;border-radius:20px;max-height:86dvh;display:flex;flex-direction:column;box-shadow:0 20px 50px -20px rgba(0,0,0,.4)}
+  .hhead{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line)}
+  .hhead b{font-family:'Fredoka';font-size:16px}
+  .hclose{border:none;background:var(--cream2);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:15px;color:var(--ink)}
+  .hbody{overflow-y:auto;padding:14px 16px}
+  .hgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:11px}
+  .hcard{background:var(--card);border:1.5px solid var(--line);border-radius:13px;overflow:hidden;cursor:pointer;transition:.15s;position:relative}
+  .hcard:hover{border-color:var(--rose);box-shadow:0 8px 18px -10px rgba(197,107,122,.5)}
+  .hcard img{width:100%;aspect-ratio:1;object-fit:contain;background:#fff;display:block}
+  .hcard .hc-b{padding:7px 8px 9px}
+  .hcard .hc-n{font-family:'Fredoka';font-weight:600;font-size:12.5px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hcard .hc-m{font-size:10.5px;color:var(--soft);margin-top:1px}
+  .hcard .hc-x{position:absolute;top:5px;right:5px;background:rgba(255,255,255,.92);border:none;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:12px;color:#b14b4b;line-height:1}
+  .hempty{text-align:center;color:var(--soft);font-size:13.5px;padding:30px 10px}
 </style>
 </head>
 <body>
@@ -82,8 +123,14 @@
   <header>
     <div class="logo">tiny<span>bestie</span> maker</div>
     <div class="tag">Upload fotomu → lihat jadi figurin 🧸</div>
-    <div class="privacy">Gratis &amp; gampang. <b>Fotomu ga disimpan</b> — langsung kehapus setelah jadi.</div>
+    <div class="privacy">Gratis &amp; gampang. <b>Fotomu ga disimpan</b> di server — langsung kehapus setelah jadi.</div>
   </header>
+
+  <div class="sbar">
+    <input id="oname" type="text" placeholder="Nama order / customer (opsional)" maxlength="50">
+    <button class="sb-btn" id="bNew">+ Baru</button>
+    <button class="sb-btn hist" id="bHist">🕘 Riwayat<span class="badge" id="hcount">0</span></button>
+  </div>
 
   <main id="form">
     <div class="step">
@@ -132,13 +179,24 @@
   </div>
 
   <div class="res" id="res">
+    <div class="rname" id="rname"></div>
     <img class="resimg" id="resimg" alt="Hasil figurin">
-    <h3>Tadaa! Ini figurin versimu 🎉</h3>
+    <h3>Tadaa! Ini figurinnya 🎉</h3>
     <p>Suka? Download dulu, terus kirim ke CS buat pesan yang asli.</p>
     <div class="btnrow">
       <a class="btn btn-dl" id="dl" download="figurin-tinybestie.png">⬇️ Download Gambar</a>
       <a class="btn btn-wa" id="wa" target="_blank" rel="noopener">💬 Pesan ke CS (WhatsApp)</a>
-      <button class="btn btn-again" id="again">↺ Coba style / foto lain</button>
+      <button class="btn btn-rev" id="bRev">✏️ Revisi figurin ini</button>
+      <button class="btn btn-again" id="again">↺ Sesi baru</button>
+    </div>
+    <div class="revbox" id="revbox">
+      <label>Mau diubah apa?</label>
+      <textarea id="revtext" placeholder="cth: ganti baju jadi merah · rambut lebih panjang · tambah kacamata · senyum lebih lebar"></textarea>
+      <div class="rv-row">
+        <button class="rv-go" id="revGo">✨ Generate revisi</button>
+        <button class="rv-x" id="revX">batal</button>
+      </div>
+      <div class="rv-hint">Revisi pakai hasil yang lagi tampil sekarang. Makan ~2-3 menit lagi.</div>
     </div>
   </div>
 
@@ -146,79 +204,137 @@
   <div class="ft">© tinybestie — figurin chibi handmade dari fotomu</div>
 </div>
 
+<!-- history overlay -->
+<div class="hov" id="hov">
+  <div class="hpanel">
+    <div class="hhead"><b>🕘 Riwayat figurin</b><button class="hclose" id="hClose">✕</button></div>
+    <div class="hbody"><div class="hgrid" id="hgrid"></div><div class="hempty" id="hempty" style="display:none">Belum ada figurin tersimpan.<br>Bikin satu dulu yuk!</div></div>
+  </div>
+</div>
+
 <script src="config.js"></script>
 <script>
 const API = (window.MAKER_API || '').replace(/\/$/,'');
 const WA_NUMBER = (window.MAKER_WA || "62XXXXXXXXXX");
 const $ = s => document.querySelector(s);
-let style = null, photo = null;
 const STYLE_LABEL = {chibi:'Chibi', funko:'Funko Pop', realmini:'Realistic Mini'};
+let style=null, photo=null, currentResult=null, poll=null, timer=null;
 
-$('#styles').addEventListener('click', e => {
-  const c = e.target.closest('.style-card'); if(!c) return;
-  document.querySelectorAll('.style-card').forEach(x=>x.classList.remove('sel'));
-  c.classList.add('sel'); style = c.dataset.style; sync();
-});
-$('#file').addEventListener('change', e => {
-  const f = e.target.files[0]; if(!f) return;
-  const r = new FileReader();
-  r.onload = () => {
-    photo = r.result;
-    $('#dropEmpty').style.display='none';
-    const p = $('#dropPrev'); p.style.display='block'; p.innerHTML = '<img src="'+photo+'">';
-    $('#drop').classList.add('has'); sync();
-  };
-  r.readAsDataURL(f);
-});
-function sync(){ $('#go').disabled = !(style && photo); }
+/* ---------- IndexedDB (riwayat, muat banyak gambar) ---------- */
+function idb(){return new Promise((res,rej)=>{const r=indexedDB.open('tinybestie_maker',1);r.onupgradeneeded=()=>{r.result.createObjectStore('history',{keyPath:'id'});};r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});}
+async function saveItem(it){const db=await idb();return new Promise((res,rej)=>{const tx=db.transaction('history','readwrite');tx.objectStore('history').put(it);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);});}
+async function allItems(){const db=await idb();return new Promise((res,rej)=>{const rq=db.transaction('history','readonly').objectStore('history').getAll();rq.onsuccess=()=>res(rq.result||[]);rq.onerror=()=>rej(rq.error);});}
+async function delItem(id){const db=await idb();return new Promise((res)=>{const tx=db.transaction('history','readwrite');tx.objectStore('history').delete(id);tx.oncomplete=()=>res();});}
+async function refreshCount(){try{const n=(await allItems()).length;$('#hcount').textContent=n;}catch(e){}}
 
-let timer=null, poll=null;
+/* ---------- helpers ---------- */
+function orderName(){return ($('#oname').value||'').trim() || 'Tanpa nama';}
+function mkItem(image, st, name){return {id:Date.now()+'-'+Math.random().toString(36).slice(2,7), t:Date.now(), name, style:st, image, time:new Date().toLocaleString('id-ID',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})};}
+function show(view){['form','load','res'].forEach(v=>$('#'+v).classList.toggle('on', v===view));$('#form').style.display = view==='form'?'block':'none';$('#err').classList.remove('on');}
+
+/* ---------- pick style + upload ---------- */
+$('#styles').addEventListener('click', e=>{const c=e.target.closest('.style-card');if(!c)return;document.querySelectorAll('.style-card').forEach(x=>x.classList.remove('sel'));c.classList.add('sel');style=c.dataset.style;sync();});
+$('#file').addEventListener('change', e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{photo=r.result;$('#dropEmpty').style.display='none';const p=$('#dropPrev');p.style.display='block';p.innerHTML='<img src="'+photo+'">';$('#drop').classList.add('has');sync();};r.readAsDataURL(f);});
+function sync(){$('#go').disabled = !(style && photo);}
+
+/* ---------- loading ui ---------- */
 const MSGS=["Lagi nyiapin tanah liat digital…","Lagi pelajarin wajahmu…","Lagi bentuk kepala & badan…","Lagi ngecat figurinmu…","Dikit lagi jadi, sabar ya bestie 🧸"];
-$('#go').addEventListener('click', start);
-$('#again').addEventListener('click', reset);
+function startLoad(first){show('load');let sec=0,mi=0;$('#lmsg').textContent=first||MSGS[0];$('#ltime').textContent='0 detik';clearInterval(timer);timer=setInterval(()=>{sec++;$('#ltime').textContent=sec+' detik';if(sec%24===0){mi=(mi+1)%MSGS.length;$('#lmsg').textContent=MSGS[mi];}},1000);}
+function stopAll(){clearInterval(timer);clearInterval(poll);}
 
+/* ---------- job runner ---------- */
+async function runJob(payload){
+  const r=await fetch(API+'/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  const d=await r.json();
+  if(!r.ok||!d.jobId) throw new Error(d.error||'Gagal mulai. Coba lagi ya.');
+  return await new Promise((resolve,reject)=>{
+    poll=setInterval(async()=>{
+      try{const s=await fetch(API+'/status/'+d.jobId);const j=await s.json();
+        if(j.status==='queued'&&j.position>1)$('#lmsg').textContent='Lagi antri (posisi '+j.position+')…';
+        if(j.status==='done'){clearInterval(poll);resolve(j.image);}
+        else if(j.status==='error'||j.status==='notfound'){clearInterval(poll);reject(new Error(j.error||'Gagal generate. Coba lagi ya.'));}
+      }catch(e){/* keep polling */}
+    },3000);
+  });
+}
+
+/* ---------- generate ---------- */
+$('#go').addEventListener('click', start);
 async function start(){
-  if(!API){ fail('Backend belum diset (config.js). Hubungi admin.'); return; }
-  $('#form').style.display='none'; $('#err').classList.remove('on');
-  $('#load').classList.add('on');
-  let sec=0, mi=0; $('#lmsg').textContent=MSGS[0]; $('#ltime').textContent='0 detik';
-  timer=setInterval(()=>{ sec++; $('#ltime').textContent=sec+' detik';
-    if(sec%24===0){ mi=(mi+1)%MSGS.length; $('#lmsg').textContent=MSGS[mi]; } },1000);
+  if(!API){return fail('Backend belum diset (config.js).');}
+  startLoad();
   try{
-    const r = await fetch(API+'/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({photo,style})});
-    const d = await r.json();
-    if(!r.ok || !d.jobId) throw new Error(d.error||'Gagal mulai. Coba lagi ya.');
-    pollJob(d.jobId);
-  }catch(e){ fail(e.message); }
+    const img=await runJob({photo, style});
+    const item=mkItem(img, style, orderName());
+    await saveItem(item); currentResult=item; await refreshCount();
+    showResult(item);
+  }catch(e){fail(e.message);}
 }
-function pollJob(id){
-  poll=setInterval(async()=>{
-    try{
-      const r = await fetch(API+'/status/'+id); const d = await r.json();
-      if(d.status==='queued' && d.position>1) $('#lmsg').textContent='Lagi antri (posisi '+d.position+')…';
-      if(d.status==='done'){ done(d.image); }
-      else if(d.status==='error'||d.status==='notfound'){ fail(d.error||'Gagal generate. Coba lagi ya.'); }
-    }catch(e){ /* keep polling */ }
-  },3000);
-}
-function stop(){ clearInterval(timer); clearInterval(poll); }
-function done(img){
-  stop(); $('#load').classList.remove('on');
-  $('#resimg').src=img; $('#dl').href=img;
-  const txt=encodeURIComponent("Halo CS tinybestie 👋 Aku mau pesan figurin "+(STYLE_LABEL[style]||'')+". Ini hasil preview-ku (aku lampirin fotonya ya):");
+
+/* ---------- result view ---------- */
+function showResult(item){
+  stopAll(); currentResult=item; show('res');
+  $('#rname').textContent = item.name + ' · ' + (STYLE_LABEL[item.style]||'') + ' · ' + (item.time||'');
+  $('#resimg').src=item.image; $('#dl').href=item.image;
+  $('#dl').download='figurin-'+(item.name||'tinybestie').replace(/[^a-z0-9]+/gi,'-').toLowerCase()+'.png';
+  const txt=encodeURIComponent("Halo CS tinybestie 👋 Aku mau pesan figurin "+(STYLE_LABEL[item.style]||'')+" ("+item.name+"). Ini hasil preview-ku (aku lampirin gambarnya ya):");
   $('#wa').href="https://wa.me/"+WA_NUMBER+"?text="+txt;
-  $('#res').classList.add('on');
+  $('#revbox').classList.remove('on');
 }
-function fail(msg){
-  stop(); $('#load').classList.remove('on'); $('#form').style.display='block';
-  const e=$('#err'); e.textContent='😔 '+(msg||'Ada error. Coba lagi ya.'); e.classList.add('on');
+
+/* ---------- revise ---------- */
+$('#bRev').addEventListener('click', ()=>{$('#revbox').classList.toggle('on'); if($('#revbox').classList.contains('on'))$('#revtext').focus();});
+$('#revX').addEventListener('click', ()=>$('#revbox').classList.remove('on'));
+$('#revGo').addEventListener('click', async()=>{
+  const ins=($('#revtext').value||'').trim();
+  if(!ins){$('#revtext').focus();return;}
+  if(!currentResult)return;
+  const baseName=currentResult.name||'Order'; const st=currentResult.style; const baseImg=currentResult.image;
+  $('#revtext').value='';
+  startLoad('Lagi revisi figurinmu…');
+  try{
+    const img=await runJob({photo:baseImg, instruction:ins});
+    const item=mkItem(img, st, baseName+' • revisi');
+    await saveItem(item); await refreshCount();
+    showResult(item);
+  }catch(e){fail(e.message);}
+});
+
+/* ---------- new session ---------- */
+$('#bNew').addEventListener('click', newSession);
+$('#again').addEventListener('click', newSession);
+function newSession(){
+  stopAll(); style=null; photo=null; currentResult=null;
+  document.querySelectorAll('.style-card').forEach(x=>x.classList.remove('sel'));
+  $('#dropEmpty').style.display='block'; $('#dropPrev').style.display='none'; $('#drop').classList.remove('has'); $('#file').value='';
+  $('#oname').value=''; $('#revbox').classList.remove('on');
+  show('form'); sync(); $('#oname').focus();
 }
-function reset(){
-  stop(); $('#res').classList.remove('on'); $('#err').classList.remove('on');
-  $('#form').style.display='block';
-  photo=null; $('#dropEmpty').style.display='block'; $('#dropPrev').style.display='none';
-  $('#drop').classList.remove('has'); $('#file').value=''; sync();
+
+/* ---------- history overlay ---------- */
+$('#bHist').addEventListener('click', openHistory);
+$('#hClose').addEventListener('click', ()=>$('#hov').classList.remove('on'));
+$('#hov').addEventListener('click', e=>{if(e.target.id==='hov')$('#hov').classList.remove('on');});
+async function openHistory(){
+  const items=(await allItems()).sort((a,b)=>b.t-a.t);
+  const grid=$('#hgrid'); grid.innerHTML='';
+  $('#hempty').style.display = items.length?'none':'block';
+  items.forEach(it=>{
+    const d=document.createElement('div'); d.className='hcard';
+    d.innerHTML='<button class="hc-x" title="Hapus">✕</button><img src="'+it.image+'"><div class="hc-b"><div class="hc-n">'+escapeHtml(it.name)+'</div><div class="hc-m">'+(STYLE_LABEL[it.style]||'')+' · '+(it.time||'')+'</div></div>';
+    d.querySelector('img').addEventListener('click', ()=>{$('#hov').classList.remove('on'); showResult(it); $('#oname').value=it.name==='Tanpa nama'?'':it.name;});
+    d.querySelector('.hc-b').addEventListener('click', ()=>{$('#hov').classList.remove('on'); showResult(it); $('#oname').value=it.name==='Tanpa nama'?'':it.name;});
+    d.querySelector('.hc-x').addEventListener('click', async(ev)=>{ev.stopPropagation(); await delItem(it.id); await refreshCount(); openHistory();});
+    grid.appendChild(d);
+  });
+  $('#hov').classList.add('on');
 }
+function escapeHtml(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+/* ---------- error ---------- */
+function fail(msg){stopAll(); show('form'); const e=$('#err'); e.textContent='😔 '+(msg||'Ada error. Coba lagi ya.'); e.classList.add('on');}
+
+refreshCount();
 </script>
 </body>
 </html>
