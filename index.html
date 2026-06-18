@@ -27,7 +27,7 @@
   .oname:focus{border-color:var(--rose)}
   .oname::placeholder{color:#c3b1b1;font-weight:500}
 
-  .styles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:4px}
+  .styles{display:grid;grid-template-columns:repeat(auto-fit,minmax(86px,1fr));gap:8px;margin-top:4px}
   .style-card{background:#fff;border:2.5px solid var(--line);border-radius:13px;padding:6px 6px 8px;cursor:pointer;transition:.16s;text-align:center;position:relative}
   .style-card:hover{border-color:#e0b9ad}
   .style-card.sel{border-color:var(--rose);box-shadow:0 6px 16px -8px rgba(197,107,122,.5)}
@@ -103,6 +103,7 @@
       <div class="style-card" data-style="chibi"><img src="ex_chibi.png" alt="Chibi"><div class="nm">Chibi</div><div class="ds">Gede &amp; gemes</div></div>
       <div class="style-card" data-style="funko"><img src="ex_funko.png" alt="Funko"><div class="nm">Funko Pop</div><div class="ds">Ikonik</div></div>
       <div class="style-card" data-style="realmini"><img src="ex_realmini.png" alt="Realistic"><div class="nm">Realistic</div><div class="ds">Paling mirip</div></div>
+      <div class="style-card" data-style="statue"><img src="ex_statue.png" alt="TinyStatue"><div class="nm">TinyStatue</div><div class="ds">Bust museum</div></div>
     </div>
 
     <div class="lbl" style="margin-top:13px"><span class="nstep">3</span> Foto</div>
@@ -128,7 +129,7 @@
 const API=(window.MAKER_API||'').replace(/\/$/,'');
 const WA=(window.MAKER_WA||"62XXXXXXXXXX");
 const $=s=>document.querySelector(s);
-const LBL={chibi:'Chibi',funko:'Funko Pop',realmini:'Realistic Mini'};
+const LBL={chibi:'Chibi',funko:'Funko Pop',realmini:'Realistic Mini',statue:'TinyStatue'};
 let selStyle=null, selPhoto=null, jobs=[], ticker=null;
 
 /* ---- IndexedDB ---- */
