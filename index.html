@@ -36,6 +36,10 @@
   .drop:hover{border-color:#e0b9ad;background:#fffaf5}.drop.has{border-style:solid;border-color:var(--rose);padding:8px}
   .drop .ico{font-size:26px}.drop .t1{font-family:'Fredoka';font-weight:600;font-size:13.5px;margin-top:3px}.drop .t2{font-size:11px;color:var(--soft);margin-top:2px}
   .drop img{max-height:140px;max-width:100%;border-radius:9px}
+  .outfits{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px}
+  .ochip{border:2px solid var(--line);background:#fff;border-radius:11px;padding:8px 11px;font-family:'Quicksand';font-weight:600;font-size:12.5px;color:var(--ink);cursor:pointer;transition:.15s}
+  .ochip:hover{border-color:#e0b9ad}
+  .ochip.sel{border-color:var(--rose);background:#fff5f2;color:var(--rose-d)}
   .go{width:100%;margin-top:13px;border:none;border-radius:13px;padding:14px;font-family:'Fredoka';font-weight:600;font-size:16px;color:#fff;background:var(--rose);cursor:pointer;transition:.16s;box-shadow:0 8px 20px -10px rgba(197,107,122,.7)}
   .go:disabled{background:#dcc8c5;box-shadow:none;cursor:not-allowed}.go:not(:disabled):active{transform:translateY(1px)}
   .gohint{font-size:11px;color:var(--soft);text-align:center;margin-top:8px;line-height:1.45}
@@ -82,7 +86,6 @@
       <div class="style-card" data-style="realmini"><img src="ex_realmini.png" alt="Realistic"><div class="nm">Realistic</div><div class="ds">Paling mirip</div></div>
       <div class="style-card" data-style="statue"><img src="ex_statue.png" alt="Statue"><div class="nm">TinyStatue</div><div class="ds">Bust museum</div></div>
       <div class="style-card" data-style="carving"><img src="ex_carving.png" alt="Carving"><div class="nm">TinyCarving</div><div class="ds">Ukiran kayu</div></div>
-      <div class="style-card" data-style="wisuda"><img src="ex_wisuda.png" alt="Wisuda"><div class="nm">Wisuda</div><div class="ds">Toga &amp; topi</div></div>
       <div class="style-card" data-style="bobble"><img src="ex_bobble.png" alt="Bobblehead"><div class="nm">Bobblehead</div><div class="ds">Kepala gede</div></div>
       <div class="style-card" data-style="anime"><img src="ex_anime.png" alt="Anime"><div class="nm">Anime</div><div class="ds">Gaya anime</div></div>
     </div>
@@ -91,10 +94,16 @@
       <div id="dropEmpty"><div class="ico">📸</div><div class="t1">Ketuk buat pilih foto</div><div class="t2">Sendiri / berdua / keluarga · jelas &amp; terang</div></div>
       <div id="dropPrev" style="display:none"></div>
     </label>
-    <label class="drop" id="drop2" style="margin-top:8px;padding:10px"><input type="file" id="file2" accept="image/*" hidden>
-      <div id="drop2Empty" style="font-size:12.5px"><span style="font-size:17px">👕</span> <b>+ Foto baju/seragam</b> <span style="color:var(--soft)">(opsional)</span><div class="t2">cth: toga wisuda — figurin bakal pakai baju INI</div></div>
-      <div id="drop2Prev" style="display:none"></div>
-    </label>
+    <div class="lbl" style="margin-top:13px"><span class="nstep">4</span> Baju <span style="font-weight:500;color:var(--soft);font-size:11px">(opsional)</span></div>
+    <div class="outfits" id="outfits">
+      <button type="button" class="ochip sel" data-of="original">👕 Sesuai foto</button>
+      <button type="button" class="ochip" data-of="wisuda">🎓 Wisuda</button>
+      <button type="button" class="ochip" data-of="jas">👔 Jas/Formal</button>
+      <button type="button" class="ochip" data-of="kebaya">👗 Kebaya/Adat</button>
+      <button type="button" class="ochip" id="ochipCustom" data-of="custom">📷 Upload baju</button>
+    </div>
+    <input type="file" id="file2" accept="image/*" hidden>
+    <div id="drop2Prev" style="display:none;margin-top:7px"></div>
     <button class="go" id="go" disabled>✨ Generate figurin</button>
     <div class="gohint">Habis klik bisa langsung tambah order lain — diproses <b>paralel (3 sekaligus)</b>.</div>
   </div>
@@ -110,8 +119,8 @@
 const API=(window.MAKER_API||'').replace(/\/$/,'');
 const WA=(window.MAKER_WA||"62XXXXXXXXXX");
 const $=s=>document.querySelector(s);
-const LBL={chibi:'Chibi',funko:'Funko Pop',realmini:'Realistic Mini',statue:'TinyStatue',carving:'TinyCarving',wisuda:'Wisuda',bobble:'Bobblehead',anime:'Anime'};
-let selStyle=null, selPhoto=null, selOutfit=null, live=[], central=[], ticker=null;
+const LBL={chibi:'Chibi',funko:'Funko Pop',realmini:'Realistic Mini',statue:'TinyStatue',carving:'TinyCarving',bobble:'Bobblehead',anime:'Anime'};
+let selStyle=null, selPhoto=null, selOutfit=null, selOutfitPreset='original', live=[], central=[], ticker=null;
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const nowStr=()=>new Date().toLocaleString('id-ID',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
 const newId=()=>Date.now()+'-'+Math.random().toString(36).slice(2,7);
@@ -119,16 +128,18 @@ const newId=()=>Date.now()+'-'+Math.random().toString(36).slice(2,7);
 /* intake */
 $('#styles').addEventListener('click',e=>{const c=e.target.closest('.style-card');if(!c)return;document.querySelectorAll('.style-card').forEach(x=>x.classList.remove('sel'));c.classList.add('sel');selStyle=c.dataset.style;sync();});
 $('#file').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{selPhoto=r.result;$('#dropEmpty').style.display='none';const p=$('#dropPrev');p.style.display='block';p.innerHTML='<img src="'+selPhoto+'">';$('#drop').classList.add('has');sync();};r.readAsDataURL(f);});
-$('#file2').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{selOutfit=r.result;$('#drop2Empty').style.display='none';const p=$('#drop2Prev');p.style.display='block';p.innerHTML='<div style="display:flex;align-items:center;gap:8px"><img src="'+selOutfit+'" style="max-height:70px;border-radius:8px"><span style="font-size:11.5px;color:var(--rose-d);font-weight:700">Baju ke-set ✓<br><span style="color:var(--soft);font-weight:500">ketuk buat ganti</span></span></div>';};r.readAsDataURL(f);});
+$('#outfits').addEventListener('click',e=>{const c=e.target.closest('.ochip');if(!c)return;const v=c.dataset.of;if(v==='custom'){$('#file2').click();return;}document.querySelectorAll('.ochip').forEach(x=>x.classList.remove('sel'));c.classList.add('sel');selOutfitPreset=v;selOutfit=null;$('#drop2Prev').style.display='none';$('#ochipCustom').textContent='📷 Upload baju';});
+$('#file2').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{selOutfit=r.result;selOutfitPreset='custom';document.querySelectorAll('.ochip').forEach(x=>x.classList.remove('sel'));$('#ochipCustom').classList.add('sel');$('#ochipCustom').textContent='📷 Baju ✓';const p=$('#drop2Prev');p.style.display='block';p.innerHTML='<img src="'+selOutfit+'" style="max-height:70px;border-radius:8px">';};r.readAsDataURL(f);});
 function sync(){$('#go').disabled=!(selStyle&&selPhoto);}
 
 /* generate / revise / sheet */
 $('#go').addEventListener('click',()=>{
   if(!API)return alert('Backend belum diset (config.js).');
   if(!(selStyle&&selPhoto))return;
-  const job={localId:newId(),startT:Date.now(),name:($('#oname').value||'').trim()||'Tanpa nama',style:selStyle,src:selPhoto,status:'queued',kind:'order',_outfit:selOutfit};
-  live.unshift(job);submit(job,{photo:selPhoto,style:selStyle,name:job.name,outfit:selOutfit||undefined});
-  selPhoto=null;selOutfit=null;$('#dropEmpty').style.display='block';$('#dropPrev').style.display='none';$('#drop').classList.remove('has');$('#file').value='';$('#drop2Empty').style.display='block';$('#drop2Prev').style.display='none';$('#file2').value='';$('#oname').value='';sync();
+  const op=(selOutfitPreset!=='original'&&selOutfitPreset!=='custom')?selOutfitPreset:undefined;
+  const job={localId:newId(),startT:Date.now(),name:($('#oname').value||'').trim()||'Tanpa nama',style:selStyle,src:selPhoto,status:'queued',kind:'order',_outfit:selOutfit,_op:op};
+  live.unshift(job);submit(job,{photo:selPhoto,style:selStyle,name:job.name,outfit:selOutfit||undefined,outfitPreset:op});
+  selPhoto=null;selOutfit=null;selOutfitPreset='original';$('#dropEmpty').style.display='block';$('#dropPrev').style.display='none';$('#drop').classList.remove('has');$('#file').value='';document.querySelectorAll('.ochip').forEach(x=>x.classList.remove('sel'));document.querySelector('.ochip[data-of="original"]').classList.add('sel');$('#ochipCustom').textContent='📷 Upload baju';$('#drop2Prev').style.display='none';$('#file2').value='';$('#oname').value='';sync();
   render();startTicker();$('#oname').focus();
 });
 async function submit(job,payload){
@@ -203,7 +214,7 @@ $('#jobs').addEventListener('click',async e=>{
   const card=e.target.closest('.job');const okey=card.dataset.okey,name=card.dataset.name,key=card.dataset.key;
   const act=b.dataset.act;
   if(act==='del'){if(okey){try{await fetch(API+'/order/'+encodeURIComponent(okey),{method:'DELETE'});}catch(e){}}live=live.filter(j=>j.localId!==key);central=central.filter(o=>o.id!==okey);render();}
-  else if(act==='retry'){const j=live.find(x=>x.localId===key);if(j){j.status='queued';j.error=null;j.startT=Date.now();updateCard(j);submit(j,j.kind==='revisi'?{reviseOf:j._parent,instruction:j._ins}:j.kind==='sisi'?{sideOf:j._parent,side:j._side}:{photo:j.src,style:j.style,name:j.name,outfit:j._outfit||undefined});startTicker();}}
+  else if(act==='retry'){const j=live.find(x=>x.localId===key);if(j){j.status='queued';j.error=null;j.startT=Date.now();updateCard(j);submit(j,j.kind==='revisi'?{reviseOf:j._parent,instruction:j._ins}:j.kind==='sisi'?{sideOf:j._parent,side:j._side}:{photo:j.src,style:j.style,name:j.name,outfit:j._outfit||undefined,outfitPreset:j._op});startTicker();}}
   else if(act==='sides'){if(okey)['belakang','kiri','kanan'].forEach(s=>sideJob(okey,name,s));}
   else if(act==='revtoggle'){const r=card.querySelector('.jrev');r.classList.toggle('on');if(r.classList.contains('on'))r.querySelector('input').focus();}
   else if(act==='revgo'){const inp=card.querySelector('.jrev input');const v=(inp.value||'').trim();if(!v)return inp.focus();if(okey)reviseJob(okey,name,v);}
