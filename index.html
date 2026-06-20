@@ -152,8 +152,8 @@ async function submit(job,payload){
   catch(e){job.status='error';job.error=e.message;}
   render();
 }
-function reviseJob(okey,parentName,ins){const job={localId:newId(),startT:Date.now(),name:(parentName||'Order')+' • revisi',style:'',src:null,status:'queued',kind:'revisi',_parent:okey,_ins:ins};live.unshift(job);submit(job,{reviseOf:okey,instruction:ins});render();startTicker();}
-function sideJob(okey,parentName,side){const job={localId:newId(),startT:Date.now(),name:(parentName||'Order')+' • '+side,style:'',src:null,status:'queued',kind:'sisi',_parent:okey,_side:side};live.unshift(job);submit(job,{sideOf:okey,side:side});render();startTicker();}
+function reviseJob(okey,parentName,ins,pimg){const job={localId:newId(),startT:Date.now(),name:(parentName||'Order')+' • revisi',style:'',src:pimg||null,status:'queued',kind:'revisi',_parent:okey,_ins:ins};live.unshift(job);submit(job,{reviseOf:okey,instruction:ins});render();startTicker();}
+function sideJob(okey,parentName,side,pimg){const job={localId:newId(),startT:Date.now(),name:(parentName||'Order')+' • '+side,style:'',src:pimg||null,status:'queued',kind:'sisi',_parent:okey,_side:side};live.unshift(job);submit(job,{sideOf:okey,side:side});render();startTicker();}
 
 /* poll */
 function startTicker(){if(ticker)return;let n=0;ticker=setInterval(()=>{n++;tick();if(n%3===0)pollAll();if(!live.some(j=>j.status==='running'||j.status==='queued')){clearInterval(ticker);ticker=null;}},1000);}
@@ -215,13 +215,13 @@ function updateCard(j){const el=document.getElementById('card-'+j.localId);if(!e
 /* card actions */
 $('#jobs').addEventListener('click',async e=>{
   const b=e.target.closest('[data-act]');if(!b)return;
-  const card=e.target.closest('.job');const okey=card.dataset.okey,name=card.dataset.name,key=card.dataset.key;
+  const card=e.target.closest('.job');const okey=card.dataset.okey,name=card.dataset.name,key=card.dataset.key;const pimg=(card.querySelector('.imgs .col:last-child img')||{}).src;
   const act=b.dataset.act;
   if(act==='del'){if(okey){try{await fetch(API+'/order/'+encodeURIComponent(okey),{method:'DELETE'});}catch(e){}}live=live.filter(j=>j.localId!==key);central=central.filter(o=>o.id!==okey);render();}
   else if(act==='retry'){const j=live.find(x=>x.localId===key);if(j){j.status='queued';j.error=null;j.startT=Date.now();updateCard(j);submit(j,j.kind==='revisi'?{reviseOf:j._parent,instruction:j._ins}:j.kind==='sisi'?{sideOf:j._parent,side:j._side}:{photo:j.src,style:j.style,name:j.name,outfit:j._outfit||undefined,outfitPreset:j._op});startTicker();}}
-  else if(act==='sides'){if(okey)['belakang','kiri','kanan'].forEach(s=>sideJob(okey,name,s));}
+  else if(act==='sides'){if(okey)['belakang','kiri','kanan'].forEach(s=>sideJob(okey,name,s,pimg));}
   else if(act==='revtoggle'){const r=card.querySelector('.jrev');r.classList.toggle('on');if(r.classList.contains('on'))r.querySelector('input').focus();}
-  else if(act==='revgo'){const inp=card.querySelector('.jrev input');const v=(inp.value||'').trim();if(!v)return inp.focus();if(okey)reviseJob(okey,name,v);}
+  else if(act==='revgo'){const inp=card.querySelector('.jrev input');const v=(inp.value||'').trim();if(!v)return inp.focus();if(okey)reviseJob(okey,name,v,pimg);}
 });
 
 /* init */
